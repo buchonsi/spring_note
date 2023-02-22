@@ -6,15 +6,9 @@ import java.sql.*;
 
 public class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
-<<<<<<< HEAD
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection c = DriverManager.getConnection(
                 "jdbc:mysql://localhost/yoon", "yoon", "yoon"
-=======
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost/springbook", "spring", "book"
->>>>>>> f15d4c3 (#1 - User Dao 구현)
         );
 
         PreparedStatement ps = c.prepareStatement(
@@ -31,18 +25,10 @@ public class UserDao {
         c.close();
     }
 
-<<<<<<< HEAD
-
     public User get(String id) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection c = DriverManager.getConnection(
                 "jdbc:mysql://localhost/yoon", "yoon", "yoon"
-=======
-    public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost/springbook", "spring", "book"
->>>>>>> f15d4c3 (#1 - User Dao 구현)
         );
 
         PreparedStatement ps = c.prepareStatement(
@@ -55,13 +41,8 @@ public class UserDao {
 
         User user = new User();
         user.setId(rs.getString("id"));
-<<<<<<< HEAD
         user.setName(rs.getString("name"));
         user.setPassword(rs.getString("password"));
-=======
-        user.setId(rs.getString("name"));
-        user.setId(rs.getString("password"));
->>>>>>> f15d4c3 (#1 - User Dao 구현)
 
         rs.close();
         ps.close();
@@ -69,7 +50,6 @@ public class UserDao {
 
         return user;
     }
-<<<<<<< HEAD
 
     public void deleteAll() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -86,6 +66,4 @@ public class UserDao {
         ps.close();
         c.close();
     }
-=======
->>>>>>> f15d4c3 (#1 - User Dao 구현)
 }
