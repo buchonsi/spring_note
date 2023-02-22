@@ -6,9 +6,9 @@ import java.sql.*;
 
 public class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost/springbook", "spring", "book"
+                "jdbc:mysql://localhost/yoon", "yoon", "yoon"
         );
 
         PreparedStatement ps = c.prepareStatement(
@@ -25,10 +25,11 @@ public class UserDao {
         c.close();
     }
 
+
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost/springbook", "spring", "book"
+                "jdbc:mysql://localhost/yoon", "yoon", "yoon"
         );
 
         PreparedStatement ps = c.prepareStatement(
@@ -41,13 +42,29 @@ public class UserDao {
 
         User user = new User();
         user.setId(rs.getString("id"));
-        user.setId(rs.getString("name"));
-        user.setId(rs.getString("password"));
+        user.setName(rs.getString("name"));
+        user.setPassword(rs.getString("password"));
 
         rs.close();
         ps.close();
         c.close();
 
         return user;
+    }
+
+    public void deleteAll() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection c = DriverManager.getConnection(
+                "jdbc:mysql://localhost/yoon", "yoon", "yoon"
+        );
+
+        PreparedStatement ps = c.prepareStatement(
+                "delete from users;"
+        );
+
+        ps.executeUpdate();
+
+        ps.close();
+        c.close();
     }
 }
