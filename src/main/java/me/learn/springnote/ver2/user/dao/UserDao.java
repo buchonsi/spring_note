@@ -10,7 +10,7 @@ import java.sql.*;
  *           3. 리소스의 반환
  * 기타 문제 : 예외 처리가 없음 (나중에 처리)
  */
-public class UserDao {
+public abstract class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
         Connection c = getConnection();
 
@@ -66,12 +66,10 @@ public class UserDao {
 
     /**
      * 중복 메소드 추출
+     * 상속을 통해 서브클래스에서 DB커넥션 연결을 선택하도록 한다. (템플릿 메소트 패턴)
+     * --템플릿 메소트 패턴 : 슈퍼클래스에서 기본적인 로직의 흐름을 만들고 기능의 일부를 추상메소드나
+     *                     오버라이딩 가능한 protected로 만들어 서브클래스에서 이런 메소드를 필요에 맞게 구현.
+     *
      */
-    private static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost/yoon", "yoon", "yoon"
-        );
-        return c;
-    }
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 }
