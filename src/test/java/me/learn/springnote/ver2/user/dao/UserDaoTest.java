@@ -1,7 +1,6 @@
 package me.learn.springnote.ver2.user.dao;
 
-import me.learn.springnote.ver1.user.dao.UserDao;
-import me.learn.springnote.ver1.user.domain.User;
+import me.learn.springnote.ver2.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ class UserDaoTest {
     @DisplayName("유저 등록")
     void add_user() throws SQLException, ClassNotFoundException {
         //given
-        me.learn.springnote.ver1.user.dao.UserDao dao = new me.learn.springnote.ver1.user.dao.UserDao();
+        UserDao dao = new UserDao();
 
         //when
         User user = new User();
@@ -33,7 +32,7 @@ class UserDaoTest {
     @DisplayName("유저 조회")
     void select_user() throws SQLException, ClassNotFoundException {
         //given
-        me.learn.springnote.ver1.user.dao.UserDao dao = new UserDao();
+        UserDao dao = new UserDao();
 
         User user = new User();
         user.setId("buchonsi");
