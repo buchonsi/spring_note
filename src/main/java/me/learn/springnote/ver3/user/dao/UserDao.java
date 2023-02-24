@@ -8,16 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 개선 사항 : 1.인터페이스로 추상화를 하였기 때문에 UserDao 자신은 사용할 클래스를 몰라도 된다.
- *           2.인터페이스를 통한 구현 객체의 확장에도 용이하다.
- * 기타 문제 : 인터페이스를 사용했음에도 생성자에서 객체를 직접 생성하는 코드가 남아있다.
+ * 개선 사항 : 1.구현 객체를 직접 생성하는 코드를 제거 > 클라이언트에 역할을 넘김
+ *           2.UserDaoTest가 클라이언트 역할 (UserDao를 사용하므로)
+ *           3. UserDaoTest - UserDao - ConnectionMaker 구조가 전략패턴
+ *           -- 전략 패턴 : 변경이 필요한 알고리즘을 인터페이스로 분리시키고,
+ *                        구현할 클래스를 필요에 따라 바꿔서 사용할 수 있는 디자인패턴.
+ *                        전략을 선택하고 바꾸는 역할은 client(UserDaoTest)에서 한다.
  */
 public class UserDao {
 
     private ConnectionMaker connectionMaker;
 
-    public UserDao() {
-        this.connectionMaker = new DConnectionMaker();
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {

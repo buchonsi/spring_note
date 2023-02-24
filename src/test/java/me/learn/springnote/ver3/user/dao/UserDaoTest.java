@@ -9,11 +9,12 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserDaoTest {
+    ConnectionMaker connectionMaker = new DConnectionMaker();
     @Test
     @DisplayName("유저 등록")
     void add_user() throws SQLException, ClassNotFoundException {
         //given
-        UserDao dao = new UserDao();
+        UserDao dao = new UserDao(connectionMaker);
 
         //when
         User user = new User();
@@ -32,7 +33,7 @@ class UserDaoTest {
     @DisplayName("유저 조회")
     void select_user() throws SQLException, ClassNotFoundException {
         //given
-        UserDao dao = new UserDao();
+        UserDao dao = new UserDao(connectionMaker);
 
         User user = new User();
         user.setId("buchonsi");
