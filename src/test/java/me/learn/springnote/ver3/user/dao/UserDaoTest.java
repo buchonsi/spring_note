@@ -13,7 +13,7 @@ class UserDaoTest {
     @DisplayName("유저 등록")
     void add_user() throws SQLException, ClassNotFoundException {
         //given
-        UserDao dao = new NUserDao();
+        UserDao dao = new UserDao();
 
         //when
         User user = new User();
@@ -32,7 +32,7 @@ class UserDaoTest {
     @DisplayName("유저 조회")
     void select_user() throws SQLException, ClassNotFoundException {
         //given
-        UserDao dao = new NUserDao();
+        UserDao dao = new UserDao();
 
         User user = new User();
         user.setId("buchonsi");
