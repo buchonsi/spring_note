@@ -1,10 +1,10 @@
 package me.learn.springnote.ver5.user.dao;
 
-import me.learn.springnote.ver4.user.dao.DaoFactory;
-import me.learn.springnote.ver4.user.dao.UserDao;
-import me.learn.springnote.ver4.user.domain.User;
+import me.learn.springnote.ver5.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
 
@@ -15,7 +15,8 @@ class UserDaoTest {
     @DisplayName("유저 등록")
     void add_user() throws SQLException, ClassNotFoundException {
         //given
-        UserDao dao = new DaoFactory().userDao();
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        UserDao dao = context.getBean("userDao", UserDao.class);
 
         //when
         User user = new User();
@@ -34,7 +35,8 @@ class UserDaoTest {
     @DisplayName("유저 조회")
     void select_user() throws SQLException, ClassNotFoundException {
         //given
-        UserDao dao = new DaoFactory().userDao();
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        UserDao dao = context.getBean("userDao", UserDao.class);
 
         User user = new User();
         user.setId("buchonsi");
