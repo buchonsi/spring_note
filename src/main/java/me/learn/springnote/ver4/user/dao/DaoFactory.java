@@ -1,18 +1,22 @@
 package me.learn.springnote.ver4.user.dao;
 
 /**
- * Dao가 새로 만들졌을 때 코드의 중복발생
+ * 중복 코드를 메소드로 추출
  */
 public class DaoFactory {
     public UserDao userDao() {
-        return new UserDao(new DConnectionMaker());
+        return new UserDao(connectionMaker());
     }
 
     public AccountDao accountDao() {
-        return new AccountDao(new DConnectionMaker());
+        return new AccountDao(connectionMaker());
     }
 
     public MessageDao messageDao() {
-        return new MessageDao(new DConnectionMaker());
+        return new MessageDao(connectionMaker());
+    }
+
+    private static ConnectionMaker connectionMaker() {
+        return new DConnectionMaker();
     }
 }
