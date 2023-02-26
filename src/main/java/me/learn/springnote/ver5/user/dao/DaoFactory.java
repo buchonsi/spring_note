@@ -20,7 +20,13 @@ public class DaoFactory {
     }
 
     @Bean
-    private static ConnectionMaker connectionMaker() {
+    public ConnectionMaker connectionMaker() {
+        return new CountingConnectionMaker(realConnectionMaker());
+    }
+
+    @Bean
+    public ConnectionMaker realConnectionMaker() {
         return new DConnectionMaker();
     }
+
 }
