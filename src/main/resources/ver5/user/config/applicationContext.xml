@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+<!--
+    의존관계를 자바 코드로 설정하는 것 말고도 XML로 관리 할 수 있다.
+    XML을 사용했을 때 장점은 XML은 단순 텍스트 파일이기 때문에
+    수정후 컴파일 같은 별도의 빋드 작업이 필요하지 않다.
+-->
+    <bean id="realConnectionMaker" class="me.learn.springnote.ver5.user.dao.DConnectionMaker">
+    </bean>
+<!--
+    생성자에 bean을 주입하는 방식 또한 가능하다.
+-->
+    <bean id="connectionMaker" class="me.learn.springnote.ver5.user.dao.CountingConnectionMaker">
+        <constructor-arg ref="realConnectionMaker" />
+    </bean>
+
+<!--
+    property 설정에서 name에 set을 제외한 메소드 이름만 적어놓으면 알아서 수정자를 찾고,
+    ref에 주입되는 bean name을 적어주며 의존성 주입설정이 가능하다.
+-->
+    <bean id="userDao" class="me.learn.springnote.ver5.user.dao.UserDao">
+        <property name="connectionMaker" ref="connectionMaker"></property>
+    </bean>
+</beans>

@@ -11,7 +11,16 @@ public class UserDao {
 
     private ConnectionMaker connectionMaker;
 
-    public UserDao(ConnectionMaker connectionMaker) {
+//    public UserDao(ConnectionMaker connectionMaker) {
+//        this.connectionMaker = connectionMaker;
+//    }
+
+    /**
+     * 생성자 주입 방식 변경 -> 수정자 주입 방식
+     * XML설정으로 연관관게 설정하기 좋다.
+     *   -- property 설정
+     */
+    public void setConnectionMaker(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
 
