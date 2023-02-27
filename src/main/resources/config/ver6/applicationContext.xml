@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="realConnectionMaker" class="me.learn.springnote.ver6.user.dao.DConnectionMaker">
+    </bean>
+
+    <bean id="connectionMaker" class="me.learn.springnote.ver6.user.dao.CountingConnectionMaker">
+        <constructor-arg ref="realConnectionMaker" />
+    </bean>
+
+    <bean id="userDao" class="me.learn.springnote.ver6.user.dao.UserDao">
+        <property name="connectionMaker" ref="connectionMaker"></property>
+    </bean>
+</beans>

@@ -1,6 +1,6 @@
-package me.learn.springnote.ver5.user.dao;
+package me.learn.springnote.ver6.user.dao;
 
-import me.learn.springnote.ver5.user.domain.User;
+import me.learn.springnote.ver6.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +14,7 @@ class UserDaoTest {
     @Test
     @DisplayName("추가기능 - 카운트 테스트")
     void count_test() throws SQLException, ClassNotFoundException {
-        ApplicationContext context = new GenericXmlApplicationContext("config/ver5/applicationContext.xml");
+        ApplicationContext context = new GenericXmlApplicationContext("config/ver6/applicationContext.xml");
         UserDao dao = context.getBean("userDao", UserDao.class);
         User user = new User();
         user.setId("buchonsi");
@@ -33,7 +33,7 @@ class UserDaoTest {
     @DisplayName("유저 등록")
     void add_user() throws SQLException, ClassNotFoundException {
         //given
-        ApplicationContext context = new GenericXmlApplicationContext("config/ver5/applicationContext.xml");
+        ApplicationContext context = new GenericXmlApplicationContext("config/ver6/applicationContext.xml");
         UserDao dao = context.getBean("userDao", UserDao.class);
 
         //when
@@ -53,7 +53,7 @@ class UserDaoTest {
     @DisplayName("유저 조회")
     void select_user() throws SQLException, ClassNotFoundException {
         //given
-        ApplicationContext context = new GenericXmlApplicationContext("config/ver5/applicationContext.xml");
+        ApplicationContext context = new GenericXmlApplicationContext("config/ver6/applicationContext.xml");
         UserDao dao = context.getBean("userDao", UserDao.class);
 
         User user = new User();
@@ -70,4 +70,5 @@ class UserDaoTest {
         assertThat(findUser).usingRecursiveComparison().isEqualTo(user);
         dao.deleteAll();
     }
+
 }
