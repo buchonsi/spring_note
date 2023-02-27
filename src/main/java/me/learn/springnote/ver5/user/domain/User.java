@@ -1,4 +1,4 @@
-package me.learn.springnote.user.domain;
+package me.learn.springnote.ver5.user.domain;
 
 public class User {
     String id;
