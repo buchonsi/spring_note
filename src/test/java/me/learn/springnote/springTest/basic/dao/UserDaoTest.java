@@ -1,15 +1,18 @@
 package me.learn.springnote.springTest.basic.dao;
 
 import me.learn.springnote.springTest.basic.domain.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserDaoTest {
     @Test
@@ -20,8 +23,8 @@ class UserDaoTest {
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
-        User user1 = new User("yoon","윤","yoon");
-        User user2 = new User("kim","김","kim");
+        User user1 = new User("yoon", "윤", "yoon");
+        User user2 = new User("kim", "김", "kim");
 
         dao.add(user1);
         dao.add(user2);
@@ -56,5 +59,19 @@ class UserDaoTest {
 
         dao.add(user3);
         assertThat(dao.getCount()).isEqualTo(3);
+    }
+
+//    JUnit4 에러 처리 방식
+//    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
+    void getUserFailure() throws SQLException {
+        ApplicationContext context = new GenericXmlApplicationContext("/config/springTest/applicationContext.xml");
+        UserDao dao = context.getBean("userDao", UserDao.class);
+
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
+        EmptyResultDataAccessException exception = assertThrows(EmptyResultDataAccessException.class, () -> dao.get("unknown_id"));
+//        assertEquals(exception.getMessage(),"Incorrect result size: expected 1, actual 0");
     }
 }
