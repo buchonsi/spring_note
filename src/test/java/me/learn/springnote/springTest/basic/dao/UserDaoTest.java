@@ -5,14 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,17 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ContextConfiguration(locations = "/config/springTest/applicationContext.xml")
 class UserDaoTest {
     @Autowired
-    private ApplicationContext context;
     private UserDao dao;
+    @Autowired
+    DataSource dataSource;
     private User user1;
     private User user2;
     private User user3;
-
-
-    @BeforeEach
-    void setUp() {
-        this.dao = context.getBean("userDao", UserDao.class);
-    }
 
     @Test
     void addAndGet() throws SQLException {
