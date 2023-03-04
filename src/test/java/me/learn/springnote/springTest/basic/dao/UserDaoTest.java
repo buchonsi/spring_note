@@ -1,30 +1,47 @@
 package me.learn.springnote.springTest.basic.dao;
 
 import me.learn.springnote.springTest.basic.domain.User;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+//@RunWith(SpringJUnit4ClassRunner.class)  --Junit4
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = "/config/springTest/applicationContext.xml")
 class UserDaoTest {
+    @Autowired
+    private ApplicationContext context;
+    private UserDao dao;
+    private User user1;
+    private User user2;
+    private User user3;
+
+
+    @BeforeEach
+    void setUp() {
+        this.dao = context.getBean("userDao", UserDao.class);
+    }
+
     @Test
     void addAndGet() throws SQLException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("/config/springTest/applicationContext.xml");
-        UserDao dao = context.getBean("userDao", UserDao.class);
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
-        User user1 = new User("yoon", "윤", "yoon");
-        User user2 = new User("kim", "김", "kim");
+        this.user1 = new User("yoon", "윤", "yoon");
+        this.user2 = new User("kim", "김", "kim");
 
         dao.add(user1);
         dao.add(user2);
@@ -41,12 +58,9 @@ class UserDaoTest {
 
     @Test
     void count() throws SQLException {
-        ApplicationContext context = new GenericXmlApplicationContext("/config/springTest/applicationContext.xml");
-
-        UserDao dao = context.getBean("userDao", UserDao.class);
-        User user1 = new User("yoon", "윤", "yoon");
-        User user2 = new User("kim", "김", "kim");
-        User user3 = new User("park", "박", "park");
+        this.user1 = new User("yoon", "윤", "yoon");
+        this.user2 = new User("kim", "김", "kim");
+        this.user3 = new User("park", "박", "park");
 
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
@@ -61,13 +75,10 @@ class UserDaoTest {
         assertThat(dao.getCount()).isEqualTo(3);
     }
 
-//    JUnit4 에러 처리 방식
+    //    JUnit4 에러 처리 방식
 //    @Test(expected = EmptyResultDataAccessException.class)
     @Test
     void getUserFailure() throws SQLException {
-        ApplicationContext context = new GenericXmlApplicationContext("/config/springTest/applicationContext.xml");
-        UserDao dao = context.getBean("userDao", UserDao.class);
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
