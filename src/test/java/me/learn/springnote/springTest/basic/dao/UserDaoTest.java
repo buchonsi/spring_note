@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -15,17 +17,26 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-//@RunWith(SpringJUnit4ClassRunner.class)  --Junit4
+//테스트 메소드에서 어플리케이션 컨텍스트의 구성이나 상태를 변경한다는 것을
+//테스트 컨텍스트 프레임워크에 알려준다.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "/config/springTest/applicationContext.xml")
+@DirtiesContext
 class UserDaoTest {
     @Autowired
     private UserDao dao;
-    @Autowired
-    DataSource dataSource;
     private User user1;
     private User user2;
     private User user3;
+
+    @BeforeEach
+    void setUp(){
+        DataSource datasource = new SingleConnectionDataSource(
+                "jdbc:mysql://localhost/testdb", "yoon", "yoon", true
+        );
+        //코드에 의한 수동 DI
+        dao.setDataSource(datasource);
+    }
 
     @Test
     void addAndGet() throws SQLException {
